@@ -12,6 +12,8 @@ def login(username, pword):
         for line in data:
             name, password = line[:-1].split(", ")
             if name == username and pword == password:
+                with open("db/current_user.txt", "w") as file:
+                    file.write(name)
                 render_products()
                 return
 
@@ -20,7 +22,7 @@ def login(username, pword):
 
 def register(**user):
     user.update({"products": []})
-    with open("db/users.txt", "a", newline='') as file:
+    with open("db/users.txt", "a", newline='\n') as file:
         file.write(json.dumps(user))
         file.write('\n')
     with open("db/user_credentials_db.txt", "a", newline='') as file:
